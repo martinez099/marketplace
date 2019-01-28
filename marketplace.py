@@ -24,6 +24,7 @@ def list_item(conn, item_id, seller_id, price):
 
             return True
         except redis.exceptions.WatchError:
+            print('WATCH ERROR for {} in list_item(), retrying ...'.format(inventory))
             pass
 
     return False
@@ -60,6 +61,7 @@ def purchase_item(conn, buyer_id, item_id, seller_id, lprice):
 
             return True
         except redis.exceptions.WatchError:
+            print('WATCH ERROR for {} in purchase_item(), retrying ...'.format(buyer))
             pass
 
     return False

@@ -17,7 +17,7 @@ def run_user(conn, user_id):
         item_id = random.randint(1, 10)
         price = random.randint(1, 100)
         if marketplace.list_item(conn, item_id, user_id, price):
-            print('user{}: listed item:{} with price {}'.format(user_id, item_id, price))
+            print('user:{} listed item:{} with price {}'.format(user_id, item_id, price))
 
         time.sleep(random.randint(1, 10) / 10)
 
@@ -25,11 +25,12 @@ def run_user(conn, user_id):
         buyer_id = random.randint(1, 10)
         price = random.randint(1, 100)
         if marketplace.purchase_item(conn, buyer_id, item_id, user_id, price):
-            print('user{}: purchased item:{} for price {} from user:{}'.format(user_id, item_id, price, buyer_id))
+            print('user:{} purchased item:{} for price {} from user:{}'.format(user_id, item_id, price, buyer_id))
 
         time.sleep(random.randint(1, 10) / 10)
 
 
+#r = redis.StrictRedis(host="redis-12000.martin.fmecloudscout.de", port=12000, decode_responses=True)
 r = redis.StrictRedis(decode_responses=True)
 
 gevent.joinall([gevent.spawn(run_user, r, i) for i in range(1, 10)])
