@@ -3,6 +3,15 @@ import redis
 
 
 def list_item(conn, item_id, seller_id, price):
+    """
+    Try to list an item on the market.
+
+    :param conn: A Redis instance.
+    :param item_id: The ID of the item to list.
+    :param seller_id: The ID of the user who wants to sell the item.
+    :param price: The price to sell.
+    :return: True on success, False otherwise.
+    """
     inventory = "inventory:%s" % seller_id
     item = "item:%s.%s" % (item_id, seller_id)
     end = time.time() + 5
@@ -31,6 +40,16 @@ def list_item(conn, item_id, seller_id, price):
 
 
 def purchase_item(conn, buyer_id, item_id, seller_id, lprice):
+    """
+    Try to purchase an item from the market.
+
+    :param conn: A Redis instance.
+    :param buyer_id: The ID of the user who wants to buy the item.
+    :param item_id: The ID of the item to buy.
+    :param seller_id: The ID of the user from who sells the item.
+    :param lprice: The max price to buy the item.
+    :return: True on success, False otherwise.
+    """
     buyer = "user:%s" % buyer_id
     seller = "user:%s" % seller_id
     item = "item:%s.%s" % (item_id, seller_id)
@@ -65,5 +84,3 @@ def purchase_item(conn, buyer_id, item_id, seller_id, lprice):
             pass
 
     return False
-
-
