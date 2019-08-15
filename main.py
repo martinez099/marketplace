@@ -16,8 +16,8 @@ def run(conn, user_id):
     :param user_id: An user ID.
     """
 
-    r.hset("user:%s" % user_id, "funds", 100)
-    r.sadd("inventory:%s" % user_id, *range(1, 10))
+    conn.hset("user:%s" % user_id, "funds", 100)
+    conn.sadd("inventory:%s" % user_id, *range(1, 10))
 
     while True:
         item_id = random.randint(1, 10)
@@ -43,8 +43,7 @@ def run(conn, user_id):
 
 
 if __name__ == '__main__':
-    # r = redis.StrictRedis(host="redis-12000.martin.fmecloudscout.de", port=12000, decode_responses=True)
     r = redis.StrictRedis(decode_responses=True)
 
-    # spawn 100 greenlets, each simulating a user
-    gevent.joinall([gevent.spawn(run, r, i) for i in range(1, 100)])
+    # spawn 10 greenlets, each simulating an user
+    gevent.joinall([gevent.spawn(run, r, i) for i in range(1, 10)])
